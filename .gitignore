@@ -1,0 +1,27 @@
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local environments
+.env
+.venv/
+venv/
+
+# Large market data and generated artifacts stay in Google Drive.
+data/
+models/
+outputs/
+reports/*.csv
+reports/*.html
+reports/*.png
+reports/*.jpg
+reports/*.pdf
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

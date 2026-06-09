@@ -1,0 +1,6 @@
+{
+  "data_dir": "/content/drive/MyDrive/CFD機械学習/backtest_ready",
+  "features_csv": "USTEC_features_all.csv",
+  "reports_dir": "/content/drive/MyDrive/CFD機械学習/reports",
+  "models_dir": "/content/drive/MyDrive/CFD機械学習/models"
+}

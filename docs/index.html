@@ -143,6 +143,7 @@
 
       input,
       textarea,
+      select,
       button {
         width: 100%;
         border-radius: 6px;
@@ -153,6 +154,7 @@
       }
 
       input,
+      select,
       textarea {
         padding: 9px 10px;
       }
@@ -208,6 +210,12 @@
         display: block;
         font-size: 20px;
         margin-bottom: 4px;
+      }
+
+      .api-status {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
       }
 
       .table-wrap {
@@ -285,9 +293,55 @@
       <section class="panel">
         <h2>Live Signal</h2>
         <p class="notice">
-          GitHub Pagesから証券会社のUSTECレートへ直接つなぐことはできないため、現在レートと直近1分足CSVを入力して判定します。
-          1分足がない場合は、手入力の15分変化と30分レンジでも判定できます。
+          API提供会社から1分足を取得し、15分変化と30分レンジを自動計算して判定します。
+          ブラウザに入力したAPIキーは保存しません。GitHub Pagesではキーが画面側に見えるため、検証用キーの利用を推奨します。
         </p>
+
+        <div class="form-grid">
+          <label>
+            <span>APIプロバイダ</span>
+            <select id="api-provider">
+              <option value="polygon">Polygon.io</option>
+              <option value="alpaca">Alpaca</option>
+              <option value="iex">IEX Cloud legacy</option>
+            </select>
+          </label>
+          <label>
+            <span>シンボル</span>
+            <input id="api-symbol" type="text" value="QQQ" placeholder="例: QQQ / NDX / I:NDX" />
+          </label>
+          <label>
+            <span>更新間隔 秒</span>
+            <input id="api-refresh-seconds" type="number" min="15" step="5" value="60" />
+          </label>
+        </div>
+
+        <div class="form-grid" style="margin-top: 10px">
+          <label>
+            <span>API Key</span>
+            <input id="api-key" type="password" autocomplete="off" placeholder="Polygon / IEX token または Alpaca key id" />
+          </label>
+          <label>
+            <span>Alpaca Secret Key</span>
+            <input id="api-secret" type="password" autocomplete="off" placeholder="Alpacaのみ必要" />
+          </label>
+          <label>
+            <span>Alpaca Feed</span>
+            <select id="alpaca-feed">
+              <option value="iex">iex</option>
+              <option value="sip">sip</option>
+              <option value="delayed_sip">delayed_sip</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-grid" style="margin-top: 10px">
+          <button class="primary" id="start-live" type="button">API自動判定を開始</button>
+          <button class="ghost" id="fetch-api-once" type="button">1回だけ取得して判定</button>
+          <button class="ghost" id="stop-live" type="button">自動判定を停止</button>
+        </div>
+
+        <div class="api-status" id="api-status">API未接続</div>
 
         <div class="form-grid">
           <label>
@@ -397,6 +451,8 @@
         recent: null,
         reduced: null,
         candles: [],
+        liveTimer: null,
+        lastProvider: "",
       };
 
       function byId(id) {
@@ -657,6 +713,134 @@
         }
       }
 
+      function setApiStatus(message, className = "") {
+        const el = byId("api-status");
+        el.className = `api-status ${className}`;
+        el.textContent = message;
+      }
+
+      function todayIsoDate(date = nowJstDate()) {
+        const pad = (value) => String(value).padStart(2, "0");
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+      }
+
+      function normalizeApiCandles(rows) {
+        return rows
+          .map((row) => ({
+            date: new Date(row.t),
+            high: Number(row.h),
+            low: Number(row.l),
+            close: Number(row.c),
+          }))
+          .filter((row) => row.date && [row.high, row.low, row.close].every(Number.isFinite))
+          .sort((a, b) => a.date - b.date)
+          .slice(-90);
+      }
+
+      async function fetchAlpacaBars({ symbol, key, secret }) {
+        const params = new URLSearchParams({
+          timeframe: "1Min",
+          limit: "90",
+          feed: byId("alpaca-feed").value || "iex",
+          sort: "asc",
+        });
+        const response = await fetch(`https://data.alpaca.markets/v2/stocks/${encodeURIComponent(symbol)}/bars?${params}`, {
+          headers: {
+            "APCA-API-KEY-ID": key,
+            "APCA-API-SECRET-KEY": secret,
+          },
+        });
+        if (!response.ok) throw new Error(`Alpaca ${response.status}`);
+        const data = await response.json();
+        return normalizeApiCandles(data.bars || []);
+      }
+
+      async function fetchPolygonBars({ symbol, key }) {
+        const to = todayIsoDate();
+        const fromDate = new Date(nowJstDate().getTime() - 3 * 24 * 60 * 60000);
+        const from = todayIsoDate(fromDate);
+        const params = new URLSearchParams({
+          adjusted: "true",
+          sort: "asc",
+          limit: "500",
+          apiKey: key,
+        });
+        const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${encodeURIComponent(symbol)}/range/1/minute/${from}/${to}?${params}`);
+        if (!response.ok) throw new Error(`Polygon ${response.status}`);
+        const data = await response.json();
+        return normalizeApiCandles((data.results || []).map((row) => ({ t: row.t, h: row.h, l: row.l, c: row.c })));
+      }
+
+      async function fetchIexBars({ symbol, key }) {
+        const params = new URLSearchParams({
+          token: key,
+          chartLast: "90",
+          chartIEXOnly: "true",
+        });
+        const response = await fetch(`https://cloud.iexapis.com/stable/stock/${encodeURIComponent(symbol)}/intraday-prices?${params}`);
+        if (!response.ok) throw new Error(`IEX Cloud ${response.status}`);
+        const data = await response.json();
+        return normalizeApiCandles(
+          (data || []).map((row) => ({
+            t: row.date && row.minute ? `${row.date}T${row.minute}:00` : row.label,
+            h: row.high ?? row.marketHigh,
+            l: row.low ?? row.marketLow,
+            c: row.close ?? row.marketClose ?? row.average,
+          })),
+        );
+      }
+
+      async function fetchApiCandles() {
+        const provider = byId("api-provider").value;
+        const symbol = byId("api-symbol").value.trim().toUpperCase();
+        const key = byId("api-key").value.trim();
+        const secret = byId("api-secret").value.trim();
+        if (!symbol || !key) throw new Error("シンボルとAPI Keyを入力してください。");
+        if (provider === "alpaca" && !secret) throw new Error("AlpacaはSecret Keyも必要です。");
+
+        const common = { symbol, key, secret };
+        if (provider === "alpaca") return fetchAlpacaBars(common);
+        if (provider === "polygon") return fetchPolygonBars(common);
+        return fetchIexBars(common);
+      }
+
+      async function updateFromApi() {
+        const provider = byId("api-provider").value;
+        const symbol = byId("api-symbol").value.trim().toUpperCase();
+        setApiStatus(`${provider} / ${symbol} から取得中...`);
+        try {
+          const candles = await fetchApiCandles();
+          if (candles.length < 31) throw new Error("1分足が31本未満です。東京時間の判定には直近30分以上が必要です。");
+          state.candles = candles;
+          state.lastProvider = provider;
+          const latest = candles[candles.length - 1];
+          byId("current-datetime").value = toDatetimeLocal(latest.date);
+          byId("current-price").value = latest.close.toFixed(1);
+          byId("csv-text").value = "";
+          evaluateSignal();
+          setApiStatus(`${provider} / ${symbol}: ${toDatetimeLocal(latest.date).replace("T", " ")} の1分足まで取得。次回も同じ条件で判定します。`, "good");
+        } catch (error) {
+          setApiStatus(`API取得エラー: ${error.message}`, "risk");
+          setSignal("blocked", "API取得エラー", `${error.message} APIキー、プラン、シンボル、CORS制限を確認してください。`);
+        }
+      }
+
+      function startLiveUpdates() {
+        stopLiveUpdates();
+        updateFromApi();
+        const seconds = Math.max(15, Number(byId("api-refresh-seconds").value) || 60);
+        state.liveTimer = window.setInterval(updateFromApi, seconds * 1000);
+        setApiStatus(`${seconds}秒ごとにAPI自動判定を開始しました。`);
+      }
+
+      function stopLiveUpdates() {
+        if (state.liveTimer) {
+          window.clearInterval(state.liveTimer);
+          state.liveTimer = null;
+        }
+        setApiStatus("API自動判定を停止しました。");
+      }
+
       function renderRecent(target, data, fallback) {
         const best = data.best_recent_model;
         if (!best) {
@@ -727,6 +911,9 @@
         });
 
       byId("evaluate-signal").addEventListener("click", evaluateSignal);
+      byId("fetch-api-once").addEventListener("click", updateFromApi);
+      byId("start-live").addEventListener("click", startLiveUpdates);
+      byId("stop-live").addEventListener("click", stopLiveUpdates);
       byId("use-now").addEventListener("click", () => {
         byId("current-datetime").value = toDatetimeLocal(nowJstDate());
       });
@@ -743,6 +930,16 @@
         if (file) loadFile(file);
       });
       byId("fetch-proxy").addEventListener("click", fetchProxyPrice);
+      byId("api-provider").addEventListener("change", () => {
+        const provider = byId("api-provider").value;
+        if (provider === "alpaca") {
+          setApiStatus("AlpacaはUS株/ETFの1分足用です。無料プランはIEX feedが中心です。QQQをNQ100の代替として使えます。");
+        } else if (provider === "polygon") {
+          setApiStatus("Polygon.ioはstocks aggregate barsを使います。QQQまたは契約プランで使える指数シンボルを指定してください。");
+        } else {
+          setApiStatus("IEX Cloudはlegacy扱いです。新規運用はAlpacaまたはPolygon.ioを推奨します。");
+        }
+      });
     </script>
   </body>
 </html>

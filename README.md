@@ -1,44 +1,53 @@
 # NQ100
 
-NQ100 / USTEC の1時間足データを使って、特徴量作成、教師ラベル作成、市場状態AI、売買ルールのバックテストを進めるための作業リポジトリです。
+NQ100 / USTEC の東京時間トレード戦略を検証するためのリポジトリです。
 
-## 方針
+## 目的
 
-- GitHubにはコード、ノートブック、設定サンプルだけを置きます。
-- Google DriveにはCSV、学習済みモデル、バックテスト結果などの大きなファイルを置きます。
-- ColabではGoogle Driveをマウントして、Drive上のデータを直接読み込みます。
+東京時間に数十分から数時間だけ保有し、小さい利幅でも勝率の高い候補を探します。
+現在は、1分足データから以下のようなトレード方法を教師ラベル化して探索します。
 
-## 推奨フォルダ
+- 東京時間 8時から12時台にエントリー
+- take profit / stop loss / 最大保有時間を複数パターンで探索
+- 2024年以前を学習、2025年を検証、2026年をテストとして時系列分割
+- 学習、検証、テストすべてで勝率80%以上かつ平均ポイントがプラスの候補だけを採用
 
-```text
-NQ100/
-  notebooks/        Colabで開くノートブック
-  src/              再利用するPythonコード
-  configs/          Driveパスなどの設定サンプル
-  reports/          小さなレポート置き場
-```
+## Webアプリ
 
-## Google Drive側の想定
+`docs/` 配下にGitHub Pages向けの静的Webアプリがあります。
 
 ```text
-/content/drive/MyDrive/CFD機械学習/backtest_ready/
-  USTEC_features_all.csv
+docs/index.html
+docs/tokyo_scalp_results.json
+docs/tokyo_scalp_models.csv
 ```
 
-実際のファイル名やフォルダ名が違う場合は、`configs/drive_paths.example.json` またはノートブック先頭の `DATA_DIR` と `CSV_NAME` を変更してください。
+GitHub Pagesを有効にする場合は、GitHubのリポジトリ設定で Pages の Source を `main` ブランチの `/docs` にしてください。
 
-## Colabで開く
+## 戦略探索の実行
 
-GitHubにpush後、以下のURL形式でColabから開けます。
+ローカルでGoogle Driveが `G:` にマウントされている場合:
+
+```powershell
+python scripts/run_tokyo_scalp_search.py --years 2023 2024 2025 2026 --output-dir docs
+```
+
+Colabで実行する場合は、Google Driveをマウントしたうえで以下のように実行できます。
+
+```python
+!python scripts/run_tokyo_scalp_search.py --years 2023 2024 2025 2026 --output-dir docs
+```
+
+## 既存Colabノートブック
+
+バックテスト用ノートブック:
 
 ```text
 https://colab.research.google.com/github/hon-daisuki/NQ100/blob/main/notebooks/16_backtest_colab.ipynb
 ```
 
-## 最初の実行
+## 注意
 
-1. Colabで `notebooks/16_backtest_colab.ipynb` を開く
-2. `drive.mount("/content/drive")` を実行する
-3. `DATA_DIR` と `CSV_NAME` をDrive上の実データに合わせる
-4. データ確認、ラベル作成、学習、バックテストを順番に実行する
-
+勝率80%以上の候補は、過去データに対する探索結果です。
+特に小さい利確幅と大きい損切り幅の組み合わせは、勝率が高くても1回の負けが重くなる可能性があります。
+実運用前にはスプレッド、約定、滑り、取引停止時間、ロット管理を含めてデモ口座で検証してください。

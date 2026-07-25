@@ -1,0 +1,33 @@
+{
+  "title": "NQ100 Tokyo Scalp Live Profile",
+  "data_root": "G:\\マイドライブ\\CFD機械学習\\NQ100",
+  "years": [
+    2025,
+    2026
+  ],
+  "date_start": "2025-01-02 08:00:00",
+  "date_end": "2026-05-23 05:58:00",
+  "tokyo_entries": 107572,
+  "range_30m_points": {
+    "low_threshold": 21.900000000001455,
+    "mid_threshold": 38.549999999995634,
+    "median": 29.0
+  },
+  "spread_points": {
+    "low_threshold": 1.0,
+    "mid_threshold": 1.5,
+    "median": 1.0999999999985448
+  },
+  "reduced_stop_loss_model": {
+    "side": "long",
+    "take_profit_points": 2.0,
+    "stop_loss_points": 30.0,
+    "max_hold_minutes": 15,
+    "filters": {
+      "hour": "10",
+      "momentum_15": "down",
+      "volatility_30": "vol_low"
+    },
+    "momentum_15_down_points": -4.0
+  }
+}

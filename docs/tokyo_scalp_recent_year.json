@@ -1,0 +1,207 @@
+{
+  "title": "NQ100 Recent One-Year Tokyo Scalp Evaluation",
+  "target_win_rate": 0.8,
+  "max_stop_loss": null,
+  "data_root": "G:\\マイドライブ\\CFD機械学習\\NQ100",
+  "date_start": "2025-05-23 05:58:00",
+  "date_end": "2026-05-23 05:58:00",
+  "minute_rows": 353714,
+  "tokyo_candidate_entries": 77633,
+  "candidate_models": 794,
+  "fast_positive_candidates": 7,
+  "precise_positive_candidates": 7,
+  "best_recent_model": {
+    "side": "long",
+    "take_profit_points": 2.0,
+    "stop_loss_points": 50.0,
+    "max_hold_minutes": 30,
+    "filters": {
+      "hour": "10",
+      "trend_60": "below_sma60",
+      "volatility_30": "vol_low"
+    },
+    "trades": 2993,
+    "win_rate": 0.8897427330437688,
+    "avg_points": 0.29622452388908377,
+    "profit_factor": 1.2002755878831768,
+    "total_points": 886.6000000000276,
+    "max_loss_points": -50.0,
+    "source_test_win_rate": 0.9174757281553398,
+    "source_test_total_points": 157.9000000000051,
+    "exit_counts": {
+      "take_profit": 2655,
+      "timeout": 325,
+      "stop_loss": 13
+    }
+  },
+  "top_recent_models": [
+    {
+      "side": "long",
+      "take_profit_points": 2.0,
+      "stop_loss_points": 50.0,
+      "max_hold_minutes": 30,
+      "filters": {
+        "hour": "10",
+        "trend_60": "below_sma60",
+        "volatility_30": "vol_low"
+      },
+      "trades": 2993,
+      "win_rate": 0.8897427330437688,
+      "avg_points": 0.29622452388908377,
+      "profit_factor": 1.2002755878831768,
+      "total_points": 886.6000000000276,
+      "max_loss_points": -50.0,
+      "source_test_win_rate": 0.9174757281553398,
+      "source_test_total_points": 157.9000000000051,
+      "exit_counts": {
+        "take_profit": 2655,
+        "timeout": 325,
+        "stop_loss": 13
+      }
+    },
+    {
+      "side": "short",
+      "take_profit_points": 3.0,
+      "stop_loss_points": 50.0,
+      "max_hold_minutes": 15,
+      "filters": {
+        "hour": "12",
+        "momentum_15": "up",
+        "volatility_30": "vol_high"
+      },
+      "trades": 650,
+      "win_rate": 0.9292307692307692,
+      "avg_points": 1.205769230769242,
+      "profit_factor": 1.7640750670241412,
+      "total_points": 783.7500000000073,
+      "max_loss_points": -50.0,
+      "source_test_win_rate": 0.8968133535660091,
+      "source_test_total_points": 416.60000000001673,
+      "exit_counts": {
+        "take_profit": 603,
+        "timeout": 41,
+        "stop_loss": 6
+      }
+    },
+    {
+      "side": "long",
+      "take_profit_points": 3.0,
+      "stop_loss_points": 50.0,
+      "max_hold_minutes": 30,
+      "filters": {
+        "hour": "10",
+        "momentum_15": "down",
+        "volatility_30": "vol_low"
+      },
+      "trades": 1903,
+      "win_rate": 0.8460325801366264,
+      "avg_points": 0.37364687335787666,
+      "profit_factor": 1.173797739077311,
+      "total_points": 711.0500000000393,
+      "max_loss_points": -50.0,
+      "source_test_win_rate": 0.8873239436619719,
+      "source_test_total_points": 245.70000000001164,
+      "exit_counts": {
+        "take_profit": 1596,
+        "timeout": 296,
+        "stop_loss": 11
+      }
+    },
+    {
+      "side": "short",
+      "take_profit_points": 5.0,
+      "stop_loss_points": 50.0,
+      "max_hold_minutes": 15,
+      "filters": {
+        "hour": "12",
+        "momentum_5": "up",
+        "volatility_30": "vol_high"
+      },
+      "trades": 700,
+      "win_rate": 0.8585714285714285,
+      "avg_points": 0.8353571428571689,
+      "profit_factor": 1.242851506530732,
+      "total_points": 584.7500000000182,
+      "max_loss_points": -50.0,
+      "source_test_win_rate": 0.8497267759562842,
+      "source_test_total_points": 776.2000000000007,
+      "exit_counts": {
+        "take_profit": 598,
+        "timeout": 89,
+        "stop_loss": 13
+      }
+    },
+    {
+      "side": "long",
+      "take_profit_points": 2.0,
+      "stop_loss_points": 50.0,
+      "max_hold_minutes": 30,
+      "filters": {
+        "hour": "10",
+        "momentum_15": "down",
+        "volatility_30": "vol_low"
+      },
+      "trades": 1903,
+      "win_rate": 0.8970047293746716,
+      "avg_points": 0.27614293221230785,
+      "profit_factor": 1.1825286557832675,
+      "total_points": 525.5000000000218,
+      "max_loss_points": -50.0,
+      "source_test_win_rate": 0.9225352112676056,
+      "source_test_total_points": 167.30000000000655,
+      "exit_counts": {
+        "take_profit": 1701,
+        "timeout": 194,
+        "stop_loss": 8
+      }
+    },
+    {
+      "side": "long",
+      "take_profit_points": 2.0,
+      "stop_loss_points": 30.0,
+      "max_hold_minutes": 15,
+      "filters": {
+        "hour": "10",
+        "momentum_15": "down",
+        "volatility_30": "vol_low"
+      },
+      "trades": 1903,
+      "win_rate": 0.8392012611665791,
+      "avg_points": 0.2734892275355223,
+      "profit_factor": 1.1954925345103267,
+      "total_points": 520.450000000099,
+      "max_loss_points": -30.0,
+      "source_test_win_rate": 0.8802816901408451,
+      "source_test_total_points": 113.80000000000656,
+      "exit_counts": {
+        "take_profit": 1587,
+        "timeout": 301,
+        "stop_loss": 15
+      }
+    },
+    {
+      "side": "long",
+      "take_profit_points": 2.0,
+      "stop_loss_points": 50.0,
+      "max_hold_minutes": 15,
+      "filters": {
+        "hour": "10",
+        "momentum_15": "down",
+        "volatility_30": "vol_low"
+      },
+      "trades": 1903,
+      "win_rate": 0.8397267472411981,
+      "avg_points": 0.2390173410405171,
+      "profit_factor": 1.166620876604986,
+      "total_points": 454.85000000010405,
+      "max_loss_points": -50.0,
+      "source_test_win_rate": 0.8802816901408451,
+      "source_test_total_points": 113.80000000000656,
+      "exit_counts": {
+        "take_profit": 1588,
+        "timeout": 309,
+        "stop_loss": 6
+      }
+    }
+  ]
+}

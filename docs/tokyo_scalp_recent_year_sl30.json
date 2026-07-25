@@ -1,0 +1,63 @@
+{
+  "title": "NQ100 Recent One-Year Tokyo Scalp Evaluation",
+  "target_win_rate": 0.8,
+  "max_stop_loss": 30.0,
+  "data_root": "G:\\マイドライブ\\CFD機械学習\\NQ100",
+  "date_start": "2025-05-23 05:58:00",
+  "date_end": "2026-05-23 05:58:00",
+  "minute_rows": 353714,
+  "tokyo_candidate_entries": 77633,
+  "candidate_models": 472,
+  "fast_positive_candidates": 1,
+  "precise_positive_candidates": 1,
+  "best_recent_model": {
+    "side": "long",
+    "take_profit_points": 2.0,
+    "stop_loss_points": 30.0,
+    "max_hold_minutes": 15,
+    "filters": {
+      "hour": "10",
+      "momentum_15": "down",
+      "volatility_30": "vol_low"
+    },
+    "trades": 1903,
+    "win_rate": 0.8392012611665791,
+    "avg_points": 0.2734892275355223,
+    "profit_factor": 1.1954925345103267,
+    "total_points": 520.450000000099,
+    "max_loss_points": -30.0,
+    "source_test_win_rate": 0.8802816901408451,
+    "source_test_total_points": 113.80000000000656,
+    "exit_counts": {
+      "take_profit": 1587,
+      "timeout": 301,
+      "stop_loss": 15
+    }
+  },
+  "top_recent_models": [
+    {
+      "side": "long",
+      "take_profit_points": 2.0,
+      "stop_loss_points": 30.0,
+      "max_hold_minutes": 15,
+      "filters": {
+        "hour": "10",
+        "momentum_15": "down",
+        "volatility_30": "vol_low"
+      },
+      "trades": 1903,
+      "win_rate": 0.8392012611665791,
+      "avg_points": 0.2734892275355223,
+      "profit_factor": 1.1954925345103267,
+      "total_points": 520.450000000099,
+      "max_loss_points": -30.0,
+      "source_test_win_rate": 0.8802816901408451,
+      "source_test_total_points": 113.80000000000656,
+      "exit_counts": {
+        "take_profit": 1587,
+        "timeout": 301,
+        "stop_loss": 15
+      }
+    }
+  ]
+}

@@ -209,6 +209,16 @@
       </section>
 
       <section class="panel">
+        <h2>Recent One-Year Pips</h2>
+        <div class="model-rule" id="recent-rule"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Reduced Stop-Loss Review</h2>
+        <div class="model-rule" id="reduced-sl-rule"></div>
+      </section>
+
+      <section class="panel">
         <h2>Risk Note</h2>
         <p class="notice" id="risk-note">
           勝率80%以上は探索条件を満たした候補であり、実運用の利益を保証するものではありません。
@@ -313,6 +323,43 @@
         })
         .catch((error) => {
           document.querySelector("#metrics").textContent = `Failed to load results: ${error}`;
+        });
+
+      function addRuleTo(target, label, value, className = "") {
+        const item = document.createElement("div");
+        item.className = "rule-item";
+        item.innerHTML = `<span>${label}</span><strong class="${className}">${value}</strong>`;
+        document.querySelector(target).appendChild(item);
+      }
+
+      function renderRecent(target, data, fallback) {
+        const best = data.best_recent_model;
+        if (!best) {
+          document.querySelector(target).textContent = fallback;
+          return;
+        }
+        addRuleTo(target, "Window", `${data.date_start.slice(0, 10)} to ${data.date_end.slice(0, 10)}`);
+        addRuleTo(target, "Direction", best.side);
+        addRuleTo(target, "TP / SL / Hold", `${best.take_profit_points} / ${best.stop_loss_points} / ${best.max_hold_minutes}m`);
+        addRuleTo(target, "Win Rate", fmtPct(best.win_rate), "good");
+        addRuleTo(target, "Total Pips", fmtNum(best.total_points, 1), best.total_points >= 0 ? "good" : "risk");
+        addRuleTo(target, "Trades / PF", `${best.trades} / ${fmtNum(best.profit_factor)}`);
+        addRuleTo(target, "Filters", filterText(best.filters));
+        addRuleTo(target, "Exit Counts", Object.entries(best.exit_counts).map(([k, v]) => `${k}: ${v}`).join(", "));
+      }
+
+      fetch("./tokyo_scalp_recent_year.json")
+        .then((response) => response.json())
+        .then((data) => renderRecent("#recent-rule", data, "No positive 80%+ recent-year candidate found."))
+        .catch((error) => {
+          document.querySelector("#recent-rule").textContent = `Failed to load recent-year result: ${error}`;
+        });
+
+      fetch("./tokyo_scalp_recent_year_sl30.json")
+        .then((response) => response.json())
+        .then((data) => renderRecent("#reduced-sl-rule", data, "No positive 80%+ candidate found with SL 30 or less."))
+        .catch((error) => {
+          document.querySelector("#reduced-sl-rule").textContent = `Failed to load reduced stop-loss result: ${error}`;
         });
     </script>
   </body>

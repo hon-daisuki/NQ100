@@ -432,6 +432,10 @@ def _apply_filters(frame: pd.DataFrame, filters: dict[str, str]) -> pd.DataFrame
     return frame.loc[mask]
 
 
+def apply_filters(frame: pd.DataFrame, filters: dict[str, str]) -> pd.DataFrame:
+    return _apply_filters(frame, filters)
+
+
 def models_to_frame(models: list[RuleModel]) -> pd.DataFrame:
     rows = []
     for model in models:

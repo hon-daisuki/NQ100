@@ -12,33 +12,33 @@
   "date_end": "2026-05-23 05:58:00",
   "minute_rows": 1179586,
   "tokyo_candidate_entries": 262665,
-  "candidate_models": 6,
+  "candidate_models": 794,
   "best_model": {
     "config": {
       "side": "long",
       "take_profit_points": 2,
       "stop_loss_points": 50,
-      "max_hold_minutes": 30
+      "max_hold_minutes": 180
     },
     "filters": {
-      "hour": "10",
-      "momentum_5": "down",
+      "hour": "9",
+      "trend_60": "below_sma60",
       "volatility_30": "vol_low"
     },
-    "train_trades": 5888,
-    "train_win_rate": 0.8547894021739131,
-    "train_avg_points": 0.16508152173914278,
-    "train_profit_factor": 1.1075137987102859,
-    "validation_trades": 1531,
-    "validation_win_rate": 0.8824297844546048,
-    "validation_avg_points": 0.07008491182233786,
-    "validation_profit_factor": 1.0415778664703372,
-    "test_trades": 182,
-    "test_win_rate": 0.9230769230769231,
-    "test_avg_points": 0.8692307692308132,
-    "test_profit_factor": 1.889763779527644,
-    "test_total_points": 158.200000000008,
-    "test_max_loss_points": -35.19999999999709
+    "train_trades": 10644,
+    "train_win_rate": 0.9323562570462233,
+    "train_avg_points": 0.10043686583990565,
+    "train_profit_factor": 1.0569478144834559,
+    "validation_trades": 1931,
+    "validation_win_rate": 0.967892283790782,
+    "validation_avg_points": 0.9536250647333123,
+    "validation_profit_factor": 1.9709472463157056,
+    "test_trades": 204,
+    "test_win_rate": 0.9901960784313726,
+    "test_avg_points": 1.4901960784313726,
+    "test_profit_factor": 4.04,
+    "test_total_points": 304.0,
+    "test_max_loss_points": -50.0
   },
   "top_models": [
     {
@@ -46,162 +46,673 @@
         "side": "long",
         "take_profit_points": 2,
         "stop_loss_points": 50,
-        "max_hold_minutes": 30
+        "max_hold_minutes": 180
       },
       "filters": {
-        "hour": "10",
-        "momentum_5": "down",
+        "hour": "9",
+        "trend_60": "below_sma60",
         "volatility_30": "vol_low"
       },
-      "train_trades": 5888,
-      "train_win_rate": 0.8547894021739131,
-      "train_avg_points": 0.16508152173914278,
-      "train_profit_factor": 1.1075137987102859,
-      "validation_trades": 1531,
-      "validation_win_rate": 0.8824297844546048,
-      "validation_avg_points": 0.07008491182233786,
-      "validation_profit_factor": 1.0415778664703372,
-      "test_trades": 182,
-      "test_win_rate": 0.9230769230769231,
-      "test_avg_points": 0.8692307692308132,
-      "test_profit_factor": 1.889763779527644,
-      "test_total_points": 158.200000000008,
-      "test_max_loss_points": -35.19999999999709
+      "train_trades": 10644,
+      "train_win_rate": 0.9323562570462233,
+      "train_avg_points": 0.10043686583990565,
+      "train_profit_factor": 1.0569478144834559,
+      "validation_trades": 1931,
+      "validation_win_rate": 0.967892283790782,
+      "validation_avg_points": 0.9536250647333123,
+      "validation_profit_factor": 1.9709472463157056,
+      "test_trades": 204,
+      "test_win_rate": 0.9901960784313726,
+      "test_avg_points": 1.4901960784313726,
+      "test_profit_factor": 4.04,
+      "test_total_points": 304.0,
+      "test_max_loss_points": -50.0
     },
     {
       "config": {
         "side": "long",
         "take_profit_points": 2,
         "stop_loss_points": 50,
-        "max_hold_minutes": 30
+        "max_hold_minutes": 120
+      },
+      "filters": {
+        "hour": "9",
+        "trend_60": "below_sma60",
+        "volatility_30": "vol_low"
+      },
+      "train_trades": 10644,
+      "train_win_rate": 0.919109357384442,
+      "train_avg_points": 0.05653419767005193,
+      "train_profit_factor": 1.0317356095425714,
+      "validation_trades": 1931,
+      "validation_win_rate": 0.9637493526670119,
+      "validation_avg_points": 0.9633609528741622,
+      "validation_profit_factor": 2.000000000000008,
+      "test_trades": 204,
+      "test_win_rate": 0.9901960784313726,
+      "test_avg_points": 1.4901960784313726,
+      "test_profit_factor": 4.04,
+      "test_total_points": 304.0,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
       },
       "filters": {
         "hour": "10",
         "momentum_15": "down",
-        "volatility_30": "vol_low"
+        "trend_60": "above_sma60"
       },
-      "train_trades": 4557,
-      "train_win_rate": 0.8639455782312925,
-      "train_avg_points": 0.1643734913320289,
-      "train_profit_factor": 1.105709930989721,
-      "validation_trades": 1357,
-      "validation_win_rate": 0.8761974944731025,
-      "validation_avg_points": 0.14885777450257923,
-      "validation_profit_factor": 1.0933068502009333,
-      "test_trades": 142,
-      "test_win_rate": 0.9225352112676056,
-      "test_avg_points": 1.178169014084553,
-      "test_profit_factor": 2.7666314677932218,
-      "test_total_points": 167.30000000000655,
-      "test_max_loss_points": -16.0
+      "train_trades": 1131,
+      "train_win_rate": 0.9442970822281167,
+      "train_avg_points": 0.27568523430592334,
+      "train_profit_factor": 1.1710695964666826,
+      "validation_trades": 1000,
+      "validation_win_rate": 0.957,
+      "validation_avg_points": 0.19829999999998835,
+      "validation_profit_factor": 1.1155796467913894,
+      "test_trades": 529,
+      "test_win_rate": 0.9829867674858223,
+      "test_avg_points": 1.11531190926276,
+      "test_profit_factor": 2.311111111111111,
+      "test_total_points": 590.0,
+      "test_max_loss_points": -50.0
     },
     {
       "config": {
         "side": "long",
         "take_profit_points": 2,
         "stop_loss_points": 50,
-        "max_hold_minutes": 30
+        "max_hold_minutes": 180
       },
       "filters": {
-        "hour": "10",
-        "trend_60": "below_sma60",
+        "hour": "9",
+        "momentum_15": "flat",
         "volatility_30": "vol_low"
       },
-      "train_trades": 9759,
-      "train_win_rate": 0.8510093247258941,
-      "train_avg_points": 0.23901014448202984,
-      "train_profit_factor": 1.164509064749227,
-      "validation_trades": 2403,
-      "validation_win_rate": 0.8764044943820225,
-      "validation_avg_points": 0.1256138160632582,
-      "validation_profit_factor": 1.0775097256281565,
-      "test_trades": 206,
-      "test_win_rate": 0.9174757281553398,
-      "test_avg_points": 0.7665048543689568,
-      "test_profit_factor": 1.7174011812812755,
-      "test_total_points": 157.9000000000051,
-      "test_max_loss_points": -36.10000000000218
+      "train_trades": 11587,
+      "train_win_rate": 0.9279364805385346,
+      "train_avg_points": 0.09106757573142038,
+      "train_profit_factor": 1.0516338653957178,
+      "validation_trades": 1932,
+      "validation_win_rate": 0.9544513457556936,
+      "validation_avg_points": 0.7412525879917214,
+      "validation_profit_factor": 1.6348242386630656,
+      "test_trades": 202,
+      "test_win_rate": 0.9801980198019802,
+      "test_avg_points": 0.9702970297029703,
+      "test_profit_factor": 1.98,
+      "test_total_points": 196.0,
+      "test_max_loss_points": -50.0
     },
     {
       "config": {
         "side": "long",
         "take_profit_points": 2,
         "stop_loss_points": 50,
-        "max_hold_minutes": 30
+        "max_hold_minutes": 120
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_15": "flat",
+        "volatility_30": "vol_low"
+      },
+      "train_trades": 11587,
+      "train_win_rate": 0.9155087598170364,
+      "train_avg_points": 0.07288771899543024,
+      "train_profit_factor": 1.0414700495450622,
+      "validation_trades": 1932,
+      "validation_win_rate": 0.9446169772256728,
+      "validation_avg_points": 0.4283126293995878,
+      "validation_profit_factor": 1.2933356965615046,
+      "test_trades": 202,
+      "test_win_rate": 0.9801980198019802,
+      "test_avg_points": 0.9702970297029703,
+      "test_profit_factor": 1.98,
+      "test_total_points": 196.0,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 120
       },
       "filters": {
         "hour": "10",
-        "momentum_5": "flat",
+        "momentum_15": "down",
+        "trend_60": "above_sma60"
+      },
+      "train_trades": 1131,
+      "train_win_rate": 0.9319186560565871,
+      "train_avg_points": 0.20265251989390146,
+      "train_profit_factor": 1.121992761337025,
+      "validation_trades": 1000,
+      "validation_win_rate": 0.955,
+      "validation_avg_points": 0.29979999999998835,
+      "validation_profit_factor": 1.1861880511737586,
+      "test_trades": 529,
+      "test_win_rate": 0.9773156899810964,
+      "test_avg_points": 0.9981096408317511,
+      "test_profit_factor": 2.0434782608695503,
+      "test_total_points": 527.9999999999964,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "9",
+        "minute_block": "30-44",
+        "momentum_15": "flat"
+      },
+      "train_trades": 3558,
+      "train_win_rate": 0.9325463743676222,
+      "train_avg_points": 0.08199831365935868,
+      "train_profit_factor": 1.0460119071087801,
+      "validation_trades": 1006,
+      "validation_win_rate": 0.941351888667992,
+      "validation_avg_points": 0.09612326043737647,
+      "validation_profit_factor": 1.053802926612141,
+      "test_trades": 262,
+      "test_win_rate": 0.9770992366412213,
+      "test_avg_points": 0.8091603053435115,
+      "test_profit_factor": 1.7066666666666668,
+      "test_total_points": 212.0,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_15": "down",
         "volatility_30": "vol_low"
       },
-      "train_trades": 9602,
-      "train_win_rate": 0.8339929181420538,
-      "train_avg_points": 0.20291605915433938,
-      "train_profit_factor": 1.1397032989882887,
-      "validation_trades": 1895,
-      "validation_win_rate": 0.8622691292875989,
-      "validation_avg_points": 0.07395778364119052,
-      "validation_profit_factor": 1.0449551731327673,
-      "test_trades": 170,
-      "test_win_rate": 0.9117647058823529,
-      "test_avg_points": 0.4470588235294118,
-      "test_profit_factor": 1.3247863247863247,
-      "test_total_points": 76.0,
-      "test_max_loss_points": -36.10000000000218
+      "train_trades": 4977,
+      "train_win_rate": 0.9324894514767933,
+      "train_avg_points": 0.023417721518975865,
+      "train_profit_factor": 1.012716233245497,
+      "validation_trades": 1116,
+      "validation_win_rate": 0.9668458781362007,
+      "validation_avg_points": 0.7853942652329847,
+      "validation_profit_factor": 1.6839641045649774,
+      "test_trades": 126,
+      "test_win_rate": 0.9761904761904762,
+      "test_avg_points": 0.7619047619047619,
+      "test_profit_factor": 1.64,
+      "test_total_points": 96.0,
+      "test_max_loss_points": -50.0
     },
     {
       "config": {
         "side": "long",
         "take_profit_points": 3,
         "stop_loss_points": 50,
-        "max_hold_minutes": 30
+        "max_hold_minutes": 180
       },
       "filters": {
-        "hour": "10",
-        "momentum_15": "down",
+        "hour": "9",
+        "trend_60": "below_sma60",
         "volatility_30": "vol_low"
       },
-      "train_trades": 4557,
-      "train_win_rate": 0.8016238753565943,
-      "train_avg_points": 0.2910028527540097,
-      "train_profit_factor": 1.139863311325335,
-      "validation_trades": 1357,
-      "validation_win_rate": 0.8209285187914517,
-      "validation_avg_points": 0.2549742078113432,
-      "validation_profit_factor": 1.1166436301115847,
-      "test_trades": 142,
-      "test_win_rate": 0.8873239436619719,
-      "test_avg_points": 1.730281690140927,
-      "test_profit_factor": 2.897297297297547,
-      "test_total_points": 245.70000000001164,
-      "test_max_loss_points": -17.69999999999709
+      "train_trades": 10644,
+      "train_win_rate": 0.8942127019917324,
+      "train_avg_points": 0.02709977452084783,
+      "train_profit_factor": 1.0102144702339078,
+      "validation_trades": 1931,
+      "validation_win_rate": 0.9523562920766442,
+      "validation_avg_points": 1.4705592957017228,
+      "validation_profit_factor": 2.0606196425570267,
+      "test_trades": 204,
+      "test_win_rate": 0.9754901960784313,
+      "test_avg_points": 1.9274509803921782,
+      "test_profit_factor": 2.929342492639906,
+      "test_total_points": 393.20000000000437,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 30,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_5": "flat",
+        "volatility_30": "vol_low"
+      },
+      "train_trades": 9439,
+      "train_win_rate": 0.9217078080305117,
+      "train_avg_points": 0.06353427269837664,
+      "train_profit_factor": 1.0357114146114872,
+      "validation_trades": 1518,
+      "validation_win_rate": 0.9321475625823452,
+      "validation_avg_points": 0.011133069828715772,
+      "validation_profit_factor": 1.006007607266002,
+      "test_trades": 147,
+      "test_win_rate": 0.9727891156462585,
+      "test_avg_points": 1.129251700680272,
+      "test_profit_factor": 2.3833333333333333,
+      "test_total_points": 166.0,
+      "test_max_loss_points": -30.0
     },
     {
       "config": {
         "side": "long",
         "take_profit_points": 2,
         "stop_loss_points": 50,
-        "max_hold_minutes": 15
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_5": "flat",
+        "volatility_30": "vol_low"
+      },
+      "train_trades": 9439,
+      "train_win_rate": 0.930183282127344,
+      "train_avg_points": 0.20826358724440466,
+      "train_profit_factor": 1.1261191324738433,
+      "validation_trades": 1518,
+      "validation_win_rate": 0.9472990777338604,
+      "validation_avg_points": 0.45000000000000145,
+      "validation_profit_factor": 1.3115053125997551,
+      "test_trades": 147,
+      "test_win_rate": 0.9727891156462585,
+      "test_avg_points": 0.9367346938775559,
+      "test_profit_factor": 1.9285232636547633,
+      "test_total_points": 137.70000000000073,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 120
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_5": "flat",
+        "volatility_30": "vol_low"
+      },
+      "train_trades": 9439,
+      "train_win_rate": 0.9169403538510436,
+      "train_avg_points": 0.17566479499947224,
+      "train_profit_factor": 1.1059461738997098,
+      "validation_trades": 1518,
+      "validation_win_rate": 0.9413702239789197,
+      "validation_avg_points": 0.19736495388668487,
+      "validation_profit_factor": 1.1171731393484243,
+      "test_trades": 147,
+      "test_win_rate": 0.9727891156462585,
+      "test_avg_points": 0.9040816326530712,
+      "test_profit_factor": 1.8680600914435188,
+      "test_total_points": 132.90000000000146,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "short",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 120
+      },
+      "filters": {
+        "hour": "12",
+        "momentum_5": "up",
+        "volatility_30": "vol_high"
+      },
+      "train_trades": 355,
+      "train_win_rate": 0.952112676056338,
+      "train_avg_points": 0.7980281690141132,
+      "train_profit_factor": 1.7214158390629426,
+      "validation_trades": 877,
+      "validation_win_rate": 0.9703534777651083,
+      "validation_avg_points": 0.5522234891676243,
+      "validation_profit_factor": 1.3977170074731124,
+      "test_trades": 732,
+      "test_win_rate": 0.9726775956284153,
+      "test_avg_points": 0.6292349726775937,
+      "test_profit_factor": 1.478098401494704,
+      "test_total_points": 460.59999999999854,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "short",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "12",
+        "momentum_5": "up",
+        "volatility_30": "vol_high"
+      },
+      "train_trades": 355,
+      "train_win_rate": 0.9661971830985916,
+      "train_avg_points": 1.3878873239436742,
+      "train_profit_factor": 3.5488877392654707,
+      "validation_trades": 877,
+      "validation_win_rate": 0.9714937286202965,
+      "validation_avg_points": 0.5429874572405937,
+      "validation_profit_factor": 1.3878481837432814,
+      "test_trades": 732,
+      "test_win_rate": 0.9726775956284153,
+      "test_avg_points": 0.5792349726775956,
+      "test_profit_factor": 1.424,
+      "test_total_points": 424.0,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "9",
+        "minute_block": "45-59",
+        "momentum_15": "flat"
+      },
+      "train_trades": 3710,
+      "train_win_rate": 0.930188679245283,
+      "train_avg_points": 0.21793800539084127,
+      "train_profit_factor": 1.1327962684667412,
+      "validation_trades": 1083,
+      "validation_win_rate": 0.9556786703601108,
+      "validation_avg_points": 0.24893813481069957,
+      "validation_profit_factor": 1.1497445012219427,
+      "test_trades": 289,
+      "test_win_rate": 0.972318339100346,
+      "test_avg_points": 0.5605536332179931,
+      "test_profit_factor": 1.405,
+      "test_total_points": 162.0,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 120
+      },
+      "filters": {
+        "hour": "9",
+        "minute_block": "45-59",
+        "momentum_15": "flat"
+      },
+      "train_trades": 3710,
+      "train_win_rate": 0.9237196765498652,
+      "train_avg_points": 0.1842452830188844,
+      "train_profit_factor": 1.1108049181789557,
+      "validation_trades": 1083,
+      "validation_win_rate": 0.951061865189289,
+      "validation_avg_points": 0.14016620498614218,
+      "validation_profit_factor": 1.079551409705477,
+      "test_trades": 289,
+      "test_win_rate": 0.972318339100346,
+      "test_avg_points": 0.5605536332179931,
+      "test_profit_factor": 1.405,
+      "test_total_points": 162.0,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 60
       },
       "filters": {
         "hour": "10",
         "momentum_15": "down",
+        "trend_60": "above_sma60"
+      },
+      "train_trades": 1131,
+      "train_win_rate": 0.9168877099911583,
+      "train_avg_points": 0.5540671971706307,
+      "train_profit_factor": 1.4329636922651576,
+      "validation_trades": 1000,
+      "validation_win_rate": 0.936,
+      "validation_avg_points": 0.16954999999999562,
+      "validation_profit_factor": 1.0995917648095364,
+      "test_trades": 529,
+      "test_win_rate": 0.9716446124763705,
+      "test_avg_points": 0.9623818525519753,
+      "test_profit_factor": 1.9811138947773943,
+      "test_total_points": 509.0999999999949,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "short",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 60
+      },
+      "filters": {
+        "hour": "12",
+        "momentum_5": "up",
+        "volatility_30": "vol_high"
+      },
+      "train_trades": 355,
+      "train_win_rate": 0.9436619718309859,
+      "train_avg_points": 0.683943661971829,
+      "train_profit_factor": 1.5683520599250909,
+      "validation_trades": 877,
+      "validation_win_rate": 0.9532497149372862,
+      "validation_avg_points": 0.41482326111744916,
+      "validation_profit_factor": 1.2780920348570584,
+      "test_trades": 732,
+      "test_win_rate": 0.9713114754098361,
+      "test_avg_points": 0.7004098360655598,
+      "test_profit_factor": 1.5638403167271353,
+      "test_total_points": 512.6999999999898,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 3,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_15": "flat",
         "volatility_30": "vol_low"
       },
-      "train_trades": 4557,
-      "train_win_rate": 0.8005266622778143,
-      "train_avg_points": 0.03968619705946823,
-      "train_profit_factor": 1.0256976810276226,
-      "validation_trades": 1357,
-      "validation_win_rate": 0.8179808400884304,
-      "validation_avg_points": 0.11967575534270894,
-      "validation_profit_factor": 1.0794209702660702,
-      "test_trades": 142,
-      "test_win_rate": 0.8802816901408451,
-      "test_avg_points": 0.8014084507042715,
-      "test_profit_factor": 1.8355359765052277,
-      "test_total_points": 113.80000000000655,
-      "test_max_loss_points": -16.0
+      "train_trades": 11587,
+      "train_win_rate": 0.8910848364546474,
+      "train_avg_points": 0.10551048588934944,
+      "train_profit_factor": 1.0411574794136818,
+      "validation_trades": 1932,
+      "validation_win_rate": 0.937888198757764,
+      "validation_avg_points": 1.3232401656314756,
+      "validation_profit_factor": 1.8878277478729018,
+      "test_trades": 202,
+      "test_win_rate": 0.9702970297029703,
+      "test_avg_points": 1.6544554455445761,
+      "test_profit_factor": 2.316784869976399,
+      "test_total_points": 334.20000000000437,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 3,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 120
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_15": "flat",
+        "volatility_30": "vol_low"
+      },
+      "train_trades": 11587,
+      "train_win_rate": 0.8739104168464659,
+      "train_avg_points": 0.09527056183654108,
+      "train_profit_factor": 1.0377530779753763,
+      "validation_trades": 1932,
+      "validation_win_rate": 0.9254658385093167,
+      "validation_avg_points": 0.8787267080745327,
+      "validation_profit_factor": 1.4637890998497451,
+      "test_trades": 202,
+      "test_win_rate": 0.9702970297029703,
+      "test_avg_points": 1.6168316831683096,
+      "test_profit_factor": 2.249426166794173,
+      "test_total_points": 326.59999999999854,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 3,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_15": "flat",
+        "trend_60": "below_sma60"
+      },
+      "train_trades": 6696,
+      "train_win_rate": 0.8978494623655914,
+      "train_avg_points": 0.06948924731182594,
+      "train_profit_factor": 1.0265162200282079,
+      "validation_trades": 1660,
+      "validation_win_rate": 0.9307228915662651,
+      "validation_avg_points": 0.1426807228915895,
+      "validation_profit_factor": 1.0538521878517195,
+      "test_trades": 437,
+      "test_win_rate": 0.9702517162471396,
+      "test_avg_points": 1.5290617848970351,
+      "test_profit_factor": 2.10665783371979,
+      "test_total_points": 668.2000000000044,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 3,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 120
+      },
+      "filters": {
+        "hour": "9",
+        "momentum_15": "flat",
+        "trend_60": "below_sma60"
+      },
+      "train_trades": 6696,
+      "train_win_rate": 0.8803763440860215,
+      "train_avg_points": 0.08297491039427099,
+      "train_profit_factor": 1.032484009401422,
+      "validation_trades": 1660,
+      "validation_win_rate": 0.9240963855421687,
+      "validation_avg_points": 0.09129518072289332,
+      "validation_profit_factor": 1.0340856696242824,
+      "test_trades": 437,
+      "test_win_rate": 0.9702517162471396,
+      "test_avg_points": 1.5116704805491958,
+      "test_profit_factor": 2.080471050049063,
+      "test_total_points": 660.5999999999985,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "9",
+        "volatility_30": "vol_low"
+      },
+      "train_trades": 21386,
+      "train_win_rate": 0.9286916674459927,
+      "train_avg_points": 0.07206116150752405,
+      "train_profit_factor": 1.040376438038894,
+      "validation_trades": 4219,
+      "validation_win_rate": 0.9573358615785731,
+      "validation_avg_points": 0.6539464328039871,
+      "validation_profit_factor": 1.5187065237826722,
+      "test_trades": 463,
+      "test_win_rate": 0.9697624190064795,
+      "test_avg_points": 0.7032397408207469,
+      "test_profit_factor": 1.5688329839273396,
+      "test_total_points": 325.6000000000058,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 2,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 120
+      },
+      "filters": {
+        "hour": "9",
+        "volatility_30": "vol_low"
+      },
+      "train_trades": 21386,
+      "train_win_rate": 0.9165341812400636,
+      "train_avg_points": 0.028369026465914524,
+      "train_profit_factor": 1.0157236657107733,
+      "validation_trades": 4219,
+      "validation_win_rate": 0.9506992178241289,
+      "validation_avg_points": 0.5172789760606834,
+      "validation_profit_factor": 1.3738202497387904,
+      "test_trades": 463,
+      "test_win_rate": 0.9697624190064795,
+      "test_avg_points": 0.6460043196544324,
+      "test_profit_factor": 1.4994155952579784,
+      "test_total_points": 299.1000000000022,
+      "test_max_loss_points": -50.0
+    },
+    {
+      "config": {
+        "side": "long",
+        "take_profit_points": 3,
+        "stop_loss_points": 50,
+        "max_hold_minutes": 180
+      },
+      "filters": {
+        "hour": "10",
+        "momentum_15": "down",
+        "trend_60": "above_sma60"
+      },
+      "train_trades": 1131,
+      "train_win_rate": 0.9204244031830239,
+      "train_avg_points": 0.6113174182139551,
+      "train_profit_factor": 1.284778713676701,
+      "validation_trades": 1000,
+      "validation_win_rate": 0.931,
+      "validation_avg_points": 0.04949999999999272,
+      "validation_profit_factor": 1.0180426462547814,
+      "test_trades": 529,
+      "test_win_rate": 0.9697542533081286,
+      "test_avg_points": 1.4077504725897934,
+      "test_profit_factor": 1.937555079944607,
+      "test_total_points": 744.7000000000007,
+      "test_max_loss_points": -50.0
     }
   ]
 }

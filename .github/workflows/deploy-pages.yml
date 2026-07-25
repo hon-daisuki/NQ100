@@ -1,4 +1,5 @@
 name: Deploy GitHub Pages
+# Static docs deployment for the NQ100 signal app.
 
 on:
   push:

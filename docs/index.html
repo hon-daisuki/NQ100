@@ -744,6 +744,18 @@
         return `${candles.length}本 / ${toDatetimeLocal(first.date).replace("T", " ")} から ${toDatetimeLocal(latest.date).replace("T", " ")}`;
       }
 
+      function minutesOld(date) {
+        return Math.max(0, Math.round((nowJstDate().getTime() - date.getTime()) / 60000));
+      }
+
+      function ageText(minutes) {
+        if (minutes < 60) return `${minutes}分前`;
+        const hours = Math.floor(minutes / 60);
+        const restMinutes = minutes % 60;
+        if (hours < 48) return `${hours}時間${restMinutes ? `${restMinutes}分` : ""}前`;
+        return `${Math.floor(hours / 24)}日前`;
+      }
+
       async function fetchAlpacaBars({ symbol, key, secret }) {
         const params = new URLSearchParams({
           timeframe: "1Min",
@@ -845,9 +857,25 @@
           state.candles = candles;
           state.lastProvider = provider;
           const latest = candles[candles.length - 1];
+          const oldMinutes = minutesOld(latest.date);
           byId("current-datetime").value = toDatetimeLocal(latest.date);
           byId("current-price").value = latest.close.toFixed(1);
           byId("csv-text").value = "";
+          if (oldMinutes > 180) {
+            setDetails([
+              ["API最新足", toDatetimeLocal(latest.date).replace("T", " "), "risk"],
+              ["データの古さ", ageText(oldMinutes), "risk"],
+              ["取得本数", describeCandleRange(candles)],
+              ["次の操作", "API/シンボル/feedを変更"],
+            ]);
+            setApiStatus(`${provider} / ${symbol}: 最新足が古いです (${toDatetimeLocal(latest.date).replace("T", " ")} / ${ageText(oldMinutes)})`, "risk");
+            setSignal(
+              "blocked",
+              "APIデータが古いため判定しません",
+              "取得できた最新足が現在から3時間以上古いです。PolygonのQQQが25日で止まる場合は、契約プランのリアルタイム/遅延データ制限、米国市場時間、またはシンボルの権限が原因です。Alpaca + QQQ + iex feed、または取引画面の現在レートと手入力の15分変化/30分レンジで確認してください。",
+            );
+            return;
+          }
           evaluateSignal();
           setApiStatus(`${provider} / ${symbol}: ${toDatetimeLocal(latest.date).replace("T", " ")} の1分足まで取得。次回も同じ条件で判定します。`, "good");
         } catch (error) {

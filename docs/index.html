@@ -218,6 +218,24 @@
         font-size: 13px;
       }
 
+      .manual-note {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 8px 0 12px;
+      }
+
+      details.api-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin-top: 14px;
+        padding: 12px;
+      }
+
+      details.api-panel summary {
+        cursor: pointer;
+        font-weight: 700;
+      }
+
       .table-wrap {
         overflow-x: auto;
       }
@@ -293,55 +311,9 @@
       <section class="panel">
         <h2>Live Signal</h2>
         <p class="notice">
-          API提供会社から1分足を取得し、15分変化と30分レンジを自動計算して判定します。
-          ブラウザに入力したAPIキーは保存しません。GitHub Pagesではキーが画面側に見えるため、検証用キーの利用を推奨します。
+          GMOクリック証券の取引画面で米国NQ100のレートを確認し、下の欄へ手入力して判定します。
+          APIは補助機能です。実際の発注前は必ずGMOクリック証券の表示レートで確認してください。
         </p>
-
-        <div class="form-grid">
-          <label>
-            <span>APIプロバイダ</span>
-            <select id="api-provider">
-              <option value="polygon">Polygon.io</option>
-              <option value="alpaca">Alpaca</option>
-              <option value="iex">IEX Cloud legacy</option>
-            </select>
-          </label>
-          <label>
-            <span>シンボル</span>
-            <input id="api-symbol" type="text" value="QQQ" placeholder="例: QQQ / NDX / I:NDX" />
-          </label>
-          <label>
-            <span>更新間隔 秒</span>
-            <input id="api-refresh-seconds" type="number" min="15" step="5" value="60" />
-          </label>
-        </div>
-
-        <div class="form-grid" style="margin-top: 10px">
-          <label>
-            <span>API Key</span>
-            <input id="api-key" type="password" autocomplete="off" placeholder="Polygon / IEX token または Alpaca key id" />
-          </label>
-          <label>
-            <span>Alpaca Secret Key</span>
-            <input id="api-secret" type="password" autocomplete="off" placeholder="Alpacaのみ必要" />
-          </label>
-          <label>
-            <span>Alpaca Feed</span>
-            <select id="alpaca-feed">
-              <option value="iex">iex</option>
-              <option value="sip">sip</option>
-              <option value="delayed_sip">delayed_sip</option>
-            </select>
-          </label>
-        </div>
-
-        <div class="form-grid" style="margin-top: 10px">
-          <button class="primary" id="start-live" type="button">API自動判定を開始</button>
-          <button class="ghost" id="fetch-api-once" type="button">1回だけ取得して判定</button>
-          <button class="ghost" id="stop-live" type="button">自動判定を停止</button>
-        </div>
-
-        <div class="api-status" id="api-status">API未接続</div>
 
         <div class="form-grid">
           <label>
@@ -353,8 +325,23 @@
             <input id="current-price" type="number" step="0.1" placeholder="例: 29549.9" />
           </label>
           <label>
-            <span>参考価格</span>
-            <button class="ghost" id="fetch-proxy" type="button">NQ先物の参考価格を取得</button>
+            <span>15分前レート</span>
+            <input id="price-15-ago" type="number" step="0.1" placeholder="例: 29554.9" />
+          </label>
+        </div>
+
+        <div class="form-grid" style="margin-top: 10px">
+          <label>
+            <span>直近30分 高値</span>
+            <input id="high-30" type="number" step="0.1" placeholder="例: 29560.0" />
+          </label>
+          <label>
+            <span>直近30分 安値</span>
+            <input id="low-30" type="number" step="0.1" placeholder="例: 29541.0" />
+          </label>
+          <label>
+            <span>入力補助</span>
+            <button class="ghost" id="calculate-manual" type="button">変化・レンジを計算</button>
           </label>
         </div>
 
@@ -368,19 +355,19 @@
             <input id="manual-range30" type="number" step="0.1" placeholder="21.9以下でvol_low" />
           </label>
           <label>
-            <span>1分足CSVファイル</span>
-            <input id="csv-file" type="file" accept=".csv,text/csv" />
+            <span>現在時刻</span>
+            <button class="ghost" id="use-now" type="button">現在時刻を入力</button>
           </label>
         </div>
 
-        <label style="display: block; margin-top: 10px">
-          <span>1分足CSV貼り付け</span>
-          <textarea id="csv-text" placeholder="日時,始値(BID),高値(BID),安値(BID),終値(BID),始値(ASK),高値(ASK),安値(ASK),終値(ASK)"></textarea>
-        </label>
+        <p class="manual-note">
+          15分変化は「現在レート - 15分前レート」です。直近30分レンジは「高値 - 安値」です。
+          条件は、東京10時台・15分変化 -4以下・30分レンジ 21.9以下です。
+        </p>
 
         <div class="form-grid" style="margin-top: 10px">
           <button class="primary" id="evaluate-signal" type="button">売買タイミングを判定</button>
-          <button class="ghost" id="use-now" type="button">現在時刻を入力</button>
+          <button class="ghost" id="fetch-proxy" type="button">NQ先物の参考価格を取得</button>
           <button class="ghost" id="clear-inputs" type="button">入力をクリア</button>
         </div>
 
@@ -390,6 +377,71 @@
         </div>
 
         <div class="signal-grid" id="live-details" style="margin-top: 10px"></div>
+
+        <details class="api-panel">
+          <summary>API・CSVで補助入力する</summary>
+          <p class="manual-note">
+            APIデータはGMOクリック証券の米国NQ100レートと一致しません。補助として使い、最終確認は取引画面で行ってください。
+          </p>
+
+          <div class="form-grid">
+            <label>
+              <span>APIプロバイダ</span>
+              <select id="api-provider">
+                <option value="polygon">Polygon.io</option>
+                <option value="alpaca">Alpaca</option>
+                <option value="iex">IEX Cloud legacy</option>
+              </select>
+            </label>
+            <label>
+              <span>シンボル</span>
+              <input id="api-symbol" type="text" value="QQQ" placeholder="例: QQQ / I:NDX" />
+            </label>
+            <label>
+              <span>更新間隔 秒</span>
+              <input id="api-refresh-seconds" type="number" min="15" step="5" value="60" />
+            </label>
+          </div>
+
+          <div class="form-grid" style="margin-top: 10px">
+            <label>
+              <span>API Key</span>
+              <input id="api-key" type="password" autocomplete="off" placeholder="Polygon / IEX token または Alpaca key id" />
+            </label>
+            <label>
+              <span>Alpaca Secret Key</span>
+              <input id="api-secret" type="password" autocomplete="off" placeholder="Alpacaのみ必要" />
+            </label>
+            <label>
+              <span>Alpaca Feed</span>
+              <select id="alpaca-feed">
+                <option value="iex">iex</option>
+                <option value="sip">sip</option>
+                <option value="delayed_sip">delayed_sip</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-grid" style="margin-top: 10px">
+            <button class="primary" id="start-live" type="button">API自動判定を開始</button>
+            <button class="ghost" id="fetch-api-once" type="button">1回だけ取得して判定</button>
+            <button class="ghost" id="stop-live" type="button">自動判定を停止</button>
+          </div>
+
+          <div class="api-status" id="api-status">API未接続</div>
+
+          <div class="form-grid" style="margin-top: 10px">
+            <label>
+              <span>1分足CSVファイル</span>
+              <input id="csv-file" type="file" accept=".csv,text/csv" />
+            </label>
+          </div>
+
+          <label style="display: block; margin-top: 10px">
+            <span>1分足CSV貼り付け</span>
+            <textarea id="csv-text" placeholder="日時,始値(BID),高値(BID),安値(BID),終値(BID),始値(ASK),高値(ASK),安値(ASK),終値(ASK)"></textarea>
+          </label>
+        </details>
       </section>
 
       <section class="grid" id="metrics"></section>
@@ -592,13 +644,16 @@
       }
 
       function calculateFeatures(candles, manualPrice) {
-        if (!candles.length) {
+        const manualMomentum15 = Number(byId("manual-momentum15").value);
+        const manualRange30 = Number(byId("manual-range30").value);
+        const hasManualSignal = Number.isFinite(manualMomentum15) && Number.isFinite(manualRange30);
+        if (!candles.length || hasManualSignal) {
           return {
             latestDate: byId("current-datetime").value ? new Date(byId("current-datetime").value) : nowJstDate(),
             currentPrice: manualPrice,
-            momentum15: Number(byId("manual-momentum15").value),
-            range30: Number(byId("manual-range30").value),
-            candleCount: 0,
+            momentum15: manualMomentum15,
+            range30: manualRange30,
+            candleCount: hasManualSignal ? "手入力" : 0,
           };
         }
 
@@ -900,6 +955,23 @@
         setApiStatus("API自動判定を停止しました。");
       }
 
+      function calculateManualInputs() {
+        const current = Number(byId("current-price").value);
+        const price15 = Number(byId("price-15-ago").value);
+        const high30 = Number(byId("high-30").value);
+        const low30 = Number(byId("low-30").value);
+        state.candles = [];
+        byId("csv-text").value = "";
+
+        if (Number.isFinite(current) && Number.isFinite(price15)) {
+          byId("manual-momentum15").value = (current - price15).toFixed(1);
+        }
+        if (Number.isFinite(high30) && Number.isFinite(low30)) {
+          byId("manual-range30").value = Math.abs(high30 - low30).toFixed(1);
+        }
+        setSignal("", "手入力を計算しました", "必要なら値を確認してから、売買タイミングを判定してください。");
+      }
+
       function renderRecent(target, data, fallback) {
         const best = data.best_recent_model;
         if (!best) {
@@ -970,6 +1042,7 @@
         });
 
       byId("evaluate-signal").addEventListener("click", evaluateSignal);
+      byId("calculate-manual").addEventListener("click", calculateManualInputs);
       byId("fetch-api-once").addEventListener("click", updateFromApi);
       byId("start-live").addEventListener("click", startLiveUpdates);
       byId("stop-live").addEventListener("click", stopLiveUpdates);
@@ -977,7 +1050,7 @@
         byId("current-datetime").value = toDatetimeLocal(nowJstDate());
       });
       byId("clear-inputs").addEventListener("click", () => {
-        ["current-price", "manual-momentum15", "manual-range30", "csv-text"].forEach((id) => {
+        ["current-price", "price-15-ago", "high-30", "low-30", "manual-momentum15", "manual-range30", "csv-text"].forEach((id) => {
           byId(id).value = "";
         });
         state.candles = [];

@@ -737,6 +737,13 @@
           .slice(-90);
       }
 
+      function describeCandleRange(candles) {
+        if (!candles.length) return "0本";
+        const first = candles[0];
+        const latest = candles[candles.length - 1];
+        return `${candles.length}本 / ${toDatetimeLocal(first.date).replace("T", " ")} から ${toDatetimeLocal(latest.date).replace("T", " ")}`;
+      }
+
       async function fetchAlpacaBars({ symbol, key, secret }) {
         const params = new URLSearchParams({
           timeframe: "1Min",
@@ -757,12 +764,12 @@
 
       async function fetchPolygonBars({ symbol, key }) {
         const to = todayIsoDate();
-        const fromDate = new Date(nowJstDate().getTime() - 3 * 24 * 60 * 60000);
+        const fromDate = new Date(nowJstDate().getTime() - 14 * 24 * 60 * 60000);
         const from = todayIsoDate(fromDate);
         const params = new URLSearchParams({
           adjusted: "true",
           sort: "asc",
-          limit: "500",
+          limit: "50000",
           apiKey: key,
         });
         const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${encodeURIComponent(symbol)}/range/1/minute/${from}/${to}?${params}`);
@@ -810,7 +817,31 @@
         setApiStatus(`${provider} / ${symbol} から取得中...`);
         try {
           const candles = await fetchApiCandles();
-          if (candles.length < 31) throw new Error("1分足が31本未満です。東京時間の判定には直近30分以上が必要です。");
+          if (candles.length < 31) {
+            if (candles.length) {
+              state.candles = candles;
+              const latest = candles[candles.length - 1];
+              byId("current-datetime").value = toDatetimeLocal(latest.date);
+              byId("current-price").value = latest.close.toFixed(1);
+              byId("csv-text").value = "";
+            }
+            const hint =
+              provider === "polygon"
+                ? "Polygonのプラン、シンボル、または市場時間の都合で1分足が少なく返っています。QQQのまま時間を置く、I:NDXを試す、またはAlpacaのQQQ/iex feedを試してください。"
+                : "APIのプラン、シンボル、feed、市場時間を確認してください。";
+            setDetails([
+              ["取得本数", describeCandleRange(candles), "risk"],
+              ["必要本数", "31本以上"],
+              ["次の操作", "別シンボル/APIを試すか手入力で判定"],
+            ]);
+            setApiStatus(`API取得はできましたが、1分足が不足しています: ${describeCandleRange(candles)}`, "risk");
+            setSignal(
+              "blocked",
+              "1分足が不足しています",
+              `東京時間モデルの判定には直近30分以上の1分足が必要です。${hint} 現在レートだけは反映済みなので、15分変化と30分レンジを手入力すれば判定できます。`,
+            );
+            return;
+          }
           state.candles = candles;
           state.lastProvider = provider;
           const latest = candles[candles.length - 1];
@@ -935,7 +966,7 @@
         if (provider === "alpaca") {
           setApiStatus("AlpacaはUS株/ETFの1分足用です。無料プランはIEX feedが中心です。QQQをNQ100の代替として使えます。");
         } else if (provider === "polygon") {
-          setApiStatus("Polygon.ioはstocks aggregate barsを使います。QQQまたは契約プランで使える指数シンボルを指定してください。");
+          setApiStatus("Polygon.ioは1分aggregate barsを使います。QQQで足が少ない場合は、契約プラン、I:NDX、またはAlpacaのQQQ/iex feedを試してください。");
         } else {
           setApiStatus("IEX Cloudはlegacy扱いです。新規運用はAlpacaまたはPolygon.ioを推奨します。");
         }
